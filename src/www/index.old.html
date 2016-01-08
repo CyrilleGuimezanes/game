@@ -1,0 +1,202 @@
+﻿<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>LT-negociateur</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline';img-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/app.css -->
+    <link rel="stylesheet" href="scripts/libs/lt-fmk-client/rules.css">
+    <link rel="stylesheet" href="scripts/libs/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="scripts/libs/angular-material/angular-material.min.css">
+
+    <link rel="stylesheet" href="styles/font-awesome.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/animation.css">
+    <link rel="stylesheet" href="styles/clients.css">
+    <!-- endbuild -->
+  </head>
+  <body class="ng-cloak container-fluid lt-state-init" id="body">
+
+
+    <!-- Add your site or application content here -->
+    <div ng-controller="ltCtrl">
+        <div ng-controller="RootCtrl" class="ng-cloak" ng-class="{'menu-disabled': !isMenuEnabled}">
+
+            <div class="achivement" ng-if="achivement" ng-class="{'achivement-move': achivement}">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"><img ng-src="{{achivement.icon}}" alt=""></div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <div class="name">{{achivement.id | translate}}</div>
+                        <div class="description">{{achivement.description | translate}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="general-alert alert alert-dismissible" role="alert" ng-if="message.show" ng-class="{'alert-warning': message.type == 'warning', 'alert-danger': message.type == 'error', 'alert-success': message.type == 'success', 'alert-info': message.type == 'info'}">
+              <button type="button" class="close" ng-click="hideMessage()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{message.content | translate}}
+            </div>
+
+            <md-toolbar ng-cloak class="top-menu" ng-if="hasMenu()">
+              <div class="md-toolbar-tools">
+                <div class="top-menu-content">
+
+                    <div ng-if="username">{{::username}}</div>
+
+                    <md-progress-linear class="md-accent" md-mode="determinate"  value="{{(xp/targetxp) * 100}}"></md-progress-linear>
+                    <div class="level"><span  translate="LEVEL" translate-values="{level: level}"></span>  ({{xp}} / {{targetxp}})</div>
+
+                </div>
+
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Options" ng-click="soundGoTo($event,'trophy')">
+                    <i class="fa fa-trophy fa-2x"></i>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Encyclopedia" ng-click="soundGoTo($event,'encyclopedia')">
+                    <i class="fa fa-book fa-2x"></i>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Options" ng-click="soundGoTo($event,'settings')">
+                    <i class="fa fa-cog fa-2x"></i>
+                </md-button>
+
+              </div>
+            </md-toolbar>
+
+            <div helps ng-show="hasMenu()"></div>
+
+            <div ui-view></div>
+
+
+            <div class="lt-btn lt-btn-gold lt-badge badge-mail growing_animation" ng-if="isLogged() && unreadMails && isHome() &&  !isBargain()">{{unreadMails}}</div>
+
+            <md-button aria-label="toggle" class="md-fab md-warn bottom-fab" ng-click="toggleMenu()" ng-if="isLogged() && !isBargain()">
+                <i class="fa fa-2x" ng-class="{'fa-envelope-o': isHome(), 'fa-home': !isHome()}"></i>
+            </md-button>
+
+        </div>
+
+    </div>
+    <!--<div class="plus-one-mail">+1</div>
+    <div class="add-score"></div>-->
+    <script src="cordova.js"></script>
+
+
+    <!--<script src="scripts/libs/angular-resource/angular-resource.js"></script>--><!--
+    <script src="scripts/libs/bootstrap-tour/build/js/bootstrap-tour.min.js"></script>-->
+    <!-- build:js scripts/app.js -->
+
+    <script src="scripts/libs/angular/angular.js"></script>
+    <script src="scripts/libs/sizzle/dist/sizzle.js"></script>
+
+    <script src="scripts/libs/angular-animate/angular-animate.js"></script>
+    <script src="scripts/libs/angular-aria/angular-aria.js"></script>
+    <script src="scripts/libs/angular-touch/angular-touch.js"></script>
+    <script src="scripts/libs/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="scripts/libs/angular-translate/angular-translate.js"></script>
+    <script src="scripts/libs/angular-sanitize/angular-sanitize.js"></script>
+    <script src="scripts/libs/angular-resource/angular-resource.js"></script>
+
+    <script src="scripts/libs/createjs-soundjs/lib/soundjs-NEXT.combined.js"></script>
+    <script src="scripts/libs/angular-material/angular-material.js"></script>
+
+    <script src="scripts/libs/lt-fmk-client/app.js"></script>
+    <script src="scripts/libs/lt-fmk-client/constant/default-config.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/exception.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/config.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/log.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/session.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/translation.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/settings.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/route.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/service.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/social.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/purchase.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/phonegap.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/analytics.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/tutorial.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/sound.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/help.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/responsive.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/asset.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/trophy.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/ad.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/fmk.js"></script>
+    <script src="scripts/libs/lt-fmk-client/directive/help.directive.js"></script>
+    <script src="scripts/libs/lt-fmk-client/controller/lt.controller.js"></script>
+    <script src="scripts/libs/lt-fmk-client/soudjs-cordova-plugin-0.6.0.js"></script>
+
+    <script src="scripts/libs/lt-fmk-client/kernel.js"></script>
+
+    <script src="scripts/libs/iscroll/build/iscroll.js"></script>
+    <script src="scripts/libs/angular-iscroll/dist/lib/angular-iscroll.js"></script>
+
+
+    <script src="scripts/app.js"></script>
+
+    <script src="scripts/constant/app.config.js"></script>
+
+    <script src="scripts/translate/advices-fr-FR.js"></script>
+    <script src="scripts/translate/advices-en-US.js"></script>
+
+    <script src="scripts/translate/helps-fr-FR.js"></script>
+    <script src="scripts/translate/helps-en-US.js"></script>
+
+
+    <script src="scripts/translate/trophies-fr-FR.js"></script>
+    <script src="scripts/translate/trophies-en-US.js"></script>
+
+    <script src="scripts/translate/gui-fr-FR.js"></script>
+    <script src="scripts/translate/gui-en-US.js"></script>
+
+    <script src="scripts/translate/defaultai-fr-FR.js"></script>
+    <script src="scripts/translate/defaultai-en-US.js"></script>
+
+    <script src="scripts/translate/persotypeai-fr-FR.js"></script>
+    <script src="scripts/translate/persotypeai-en-US.js"></script>
+
+    <script src="scripts/translate/intro-fr-FR.js"></script>
+    <script src="scripts/translate/intro-en-US.js"></script>
+
+    <script src="scripts/translate/beginners-fr-FR.js"></script>
+    <script src="scripts/translate/beginners-en-US.js"></script>
+
+    <script src="scripts/translate/cultural-fr-FR.js"></script>
+    <script src="scripts/translate/cultural-en-US.js"></script>
+
+    <script src="scripts/translate/alien-fr-FR.js"></script>
+    <script src="scripts/translate/alien-en-US.js"></script>
+
+    <script src="scripts/controllers/root.controller.js"></script>
+    <script src="scripts/controllers/loading.controller.js"></script>
+    <script src="scripts/controllers/login.controller.js"></script>
+    <script src="scripts/controllers/map.controller.js"></script>
+    <script src="scripts/controllers/mail.controller.js"></script>
+    <script src="scripts/controllers/folder.controller.js"></script>
+    <script src="scripts/controllers/bargain.controller.js"></script>
+    <script src="scripts/controllers/skill.controller.js"></script>
+    <script src="scripts/controllers/mail.detail.controller.js"></script>
+    <script src="scripts/controllers/settings.controller.js"></script>
+    <script src="scripts/controllers/about.controller.js"></script>
+    <script src="scripts/controllers/popup.controller.js"></script>
+    <script src="scripts/controllers/help.controller.js"></script>
+    <script src="scripts/controllers/trophy.controller.js"></script>
+    <script src="scripts/controllers/deal.event.controller.js"></script>
+    <script src="scripts/services/bargain.ai.js"></script>
+    <script src="scripts/services/default.ai.js"></script>
+    <script src="scripts/services/persotype.ai.js"></script>
+    <script src="scripts/services/beginner1.ai.js"></script>
+    <script src="scripts/services/beginner2.ai.js"></script>
+    <script src="scripts/services/beginner3.ai.js"></script>
+    <script src="scripts/services/cultural.ai.js"></script>
+    <script src="scripts/services/alien.ai.js"></script>
+    <script src="scripts/filters/roundk.filter.js"></script>
+    <script src="scripts/filters/dots.filter.js"></script>
+    <script src="scripts/filters/currency.filter.js"></script>
+    <!-- endbuild -->
+
+
+</body>
+</html>

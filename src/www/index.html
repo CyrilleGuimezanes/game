@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <title></title>
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline';img-src 'self' data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' *">
+    <!-- build:css styles/app.css -->
+      <link rel="stylesheet" href="styles/app.css" charset="utf-8">
+    <!-- endbuild -->
+  </head>
+  <body ng-controller="ltCtrl">
+    <div ui-view></div>
+    <script src="cordova.js"></script>
+
+    <!-- build:js scripts/app.js -->
+
+    <script src="scripts/libs/angular/angular.js"></script>
+
+    <script src="scripts/libs/angular-animate/angular-animate.js"></script>
+    <script src="scripts/libs/angular-aria/angular-aria.js"></script>
+    <script src="scripts/libs/angular-touch/angular-touch.js"></script>
+    <script src="scripts/libs/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="scripts/libs/angular-translate/angular-translate.js"></script>
+    <script src="scripts/libs/angular-sanitize/angular-sanitize.js"></script>
+    <script src="scripts/libs/angular-resource/angular-resource.js"></script>
+
+    <script src="scripts/libs/createjs-soundjs/lib/soundjs-NEXT.combined.js"></script>
+    <script src="scripts/libs/angular-material/angular-material.js"></script>
+
+    <script src="scripts/libs/lt-fmk-client/app.js"></script>
+    <script src="scripts/libs/lt-fmk-client/constant/default-config.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/exception.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/config.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/log.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/session.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/translation.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/settings.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/route.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/service.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/social.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/purchase.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/phonegap.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/analytics.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/tour.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/sound.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/help.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/responsive.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/asset.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/trophy.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/ad.handler.js"></script>
+    <script src="scripts/libs/lt-fmk-client/service/fmk.js"></script>
+    <script src="scripts/libs/lt-fmk-client/directive/help.directive.js"></script>
+    <script src="scripts/libs/lt-fmk-client/controller/lt.controller.js"></script>
+    <script src="scripts/libs/lt-fmk-client/soudjs-cordova-plugin-0.6.0.js"></script>
+
+    <script src="scripts/libs/lt-fmk-client/kernel.js"></script>
+
+    <script src="scripts/libs/iscroll/build/iscroll.js"></script>
+    <script src="scripts/libs/angular-iscroll/dist/lib/angular-iscroll.js"></script>
+
+    <script src="scripts/libs/pathfinding/pathfinding-browser.min.js" charset="utf-8"></script>
+
+    <script src="scripts/app.js"></script>
+
+    <script src="scripts/constants/app.config.js"></script>
+
+    <script src="scripts/constants/constants.js" charset="utf-8"></script>
+    <script src="scripts/models/parent.js" charset="utf-8"></script>
+    <script src="scripts/models/ground.js" charset="utf-8"></script>
+    <script src="scripts/models/heart.js" charset="utf-8"></script>
+    <script src="scripts/models/small-wall.js" charset="utf-8"></script>
+    <script src="scripts/models/tree.js" charset="utf-8"></script>
+    <script src="scripts/models/soldier.js" charset="utf-8"></script>
+    <script src="scripts/models/pecor.js" charset="utf-8"></script>
+    <script src="scripts/utils/path.utils.js" charset="utf-8"></script>
+    <script src="scripts/utils/map.utils.js" charset="utf-8"></script>
+    <script src="scripts/generators/zone.generator.js" charset="utf-8"></script>
+    <script src="scripts/generators/move.generator.js" charset="utf-8"></script>
+    <script src="scripts/handlers/target.handler.js" charset="utf-8"></script>
+    <script src="scripts/handlers/attack.handler.js" charset="utf-8"></script>
+    <script src="scripts/handlers/construction.handler.js" charset="utf-8"></script>
+    <script src="scripts/controllers/map.controller.js" charset="utf-8"></script>
+
+    <!-- endbuild -->
+
+
+  </body>
+</html>

@@ -1,0 +1,11 @@
+<div class="map-container">
+  <div class="row" ng-repeat="row in rows">
+      <div id="place_{{::place.id}}" class="place {{::place.getClass()}}" ng-click="do($event, place)" style="font-size:9px" ng-repeat="place in row" >{{::place.id}}<br>{{place.life}}</div>
+  </div>
+
+</div>
+<div class="pnj {{::pnj.getClass()}}"
+     id="unit_{{::pnj.id}}"
+     ng-repeat="pnj in pnjs"
+     ng-click="do($event, pnj)"
+     style="left: {{::pnj.getPosX()}}px; top: {{::pnj.getPosY()}}px; font-size:9px"><br>{{::pnj.id}}</div>

@@ -1,0 +1,3 @@
+[submodule "lt-fmk-client"]
+	path = lt-fmk-client
+	url = git01.luditeam.com:/opt/git/lt-fmk-client

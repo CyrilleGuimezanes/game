@@ -1,0 +1,68 @@
+.map-container{
+  position: absolute;
+  width: 2000px;
+  height: 2000px;
+  top: 0;
+  left: 0;
+}
+.row{
+  width: 100%;
+  height: 40px;
+  clear: both;
+}
+.place{
+  float: left;
+  width: 38px;
+  height: 38px;
+  border: 1px solid #EEE;
+}
+.pnj{
+  position: absolute;
+  width: 38px;
+  height: 38px;
+}
+.heart{
+  background: #b44113;
+}
+
+.ground-sand{
+  background: #d2cf98;
+}
+
+.small-wall-hori{
+  background: #CCC;
+}
+
+.small-wall-verti{
+  background: #CCC;
+}
+
+.small-wall-atl{
+  background: #CCC;
+}
+
+.small-wall-atr{
+  background: #CCC;
+}
+
+.small-wall-abl{
+  background: #CCC;
+}
+.small-wall-abr{
+  background: #CCC;
+}
+
+.tree{
+  background: #235f31;
+}
+
+.tree-small{
+  background: #48a75e;
+}
+
+.soldier{
+  background: url("../images/soldier.png");
+}
+.pecor{
+  background: #;
+}
