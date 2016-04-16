@@ -15,5 +15,5 @@ var types = {
     "SMALL_WALL_ABR": "small-wall-abr",
     "TREE": "tree",
     "SOLDIER": "soldier",
-    "PECOR": "pecor",
+    "TOWER": "tower",
 }

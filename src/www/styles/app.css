@@ -63,6 +63,11 @@
 .soldier{
   background: url("../images/soldier.png");
 }
-.pecor{
-  background: #;
+.tower{
+  background: #726839;
+}
+.projectile{
+  position: absolute;
+  width: 16px;
+  height: 16px;
 }

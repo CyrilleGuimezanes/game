@@ -1,27 +1,38 @@
 
-  app.run(["ModelManager", function(ModelManager){
-  ModelManager.registerUnit("soldier", {
-    range: 1,
-    speed: 3, //en tile/s
-    attackSpeed: 100,
-    force: 1,
-    getSpeed: function(){
-      return this.speed;
-    },
-    getClass: function(){
-      return "soldier";
-    },
-    getType: function(){
-      return types.SOLDIER;
-    },
-    getTargets: function(){
-      return ["tree","heart", "small-wall", "cytizen"];
-    },
-    getWalkableTiles: function(tile){
-        return ["ground"];
-    },
-    canAttack: function(tile){
-      return Math.abs(tile.getX() - this.x) <= this.range || Math.abs(tile.getY() - this.y) <= this.range;
-    }
-  })
-}]);
+
+var Soldier = function(x, y){
+
+  Unit.call(this);
+  this.x = x;
+  this.y = y;
+  this.range = 1;
+  this.speed = 3; //en tile/s
+  this.attackSpeed = 100;
+  this.force = 1;
+  this.life = 100;
+}
+
+Soldier.prototype = Object.create(Unit.prototype);
+Soldier.prototype.constructor = Soldier;
+
+Soldier.prototype.getSpeed = function(){
+  return this.speed;
+};
+Soldier.prototype.getClass = function(){
+  return "soldier";
+};
+Soldier.prototype.getType = function(){
+  return types.SOLDIER;
+};
+Soldier.prototype.getTargets = function(){
+  return ["tree","heart", "small-wall", "cytizen"];
+};
+Soldier.prototype.getWalkableTiles = function(tile){
+    return ["ground"];
+};
+Soldier.prototype.canAttack = function(tile){
+  return Math.abs(tile.getX() - this.x) <= this.range || Math.abs(tile.getY() - this.y) <= this.range;
+};
+Soldier.prototype.getActivities = function(){
+  return ["attack"];
+};

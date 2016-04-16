@@ -1,5 +1,8 @@
 !'use strict';
 var isDebug = false;
+var map = [];
+var pnjs = [];
+var occupableItems = [];
 /**
  * @ngdoc overview
  * @name ltfmkApp
@@ -51,7 +54,8 @@ var app = angular
         });
   }])
 .run(['$rootScope','fmk', function($rootScope, fmk){
-  $rootScope.map = [];
-  $rootScope.pnjs = [];
+  $rootScope.map = window.map;
+  $rootScope.pnjs = window.pnjs;
+  window.mapManager = new MapManager();
 }])
 ;

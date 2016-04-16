@@ -8,4 +8,10 @@
      id="unit_{{::pnj.id}}"
      ng-repeat="pnj in pnjs"
      ng-click="do($event, pnj)"
-     style="left: {{::pnj.getPosX()}}px; top: {{::pnj.getPosY()}}px; font-size:9px"><br>{{::pnj.id}}</div>
+     style="left: {{::pnj.getPosX()}}px; top: {{::pnj.getPosY()}}px; font-size:9px"><br>{{::pnj.life}}</div>
+<div
+  class="projectile {{::projectile.getClass()}}"
+  id="projectile_{{::projectile.id}}"
+  ng-repeat="projectile in projectiles"
+  style="left: {{::projectile.getPosX()}}px; top: {{::projectile.getPosY()}}px;"
+/>

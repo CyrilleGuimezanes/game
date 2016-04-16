@@ -2,16 +2,15 @@
 
 
 
-app.factory('Target', ["$rootScope", function($rootScope){
+/*app.factory('Target', ["$rootScope", function($rootScope){
   return function(unit){
-    var map = $rootScope.map;
   	var targets = unit.getTargets();
   	var founds = [];
   	for (var t = 0; t < targets.length; t++){
   		for (var i = 0; i < MAP_SIZE; i++){
   			for (var j = 0; j < MAP_SIZE; j++){
-  				if (targets[t].indexOf(map[j][i].getType()) > -1){
-  					founds.push(map[j][i]);
+  				if (targets[t].indexOf(window.map[j][i].getType()) > -1){
+  					founds.push(window.map[j][i]);
   				}
   			}
   		}
@@ -40,4 +39,4 @@ app.factory('Target', ["$rootScope", function($rootScope){
   	}
   	return bestPath;
   }
-}]);
+}]);*/

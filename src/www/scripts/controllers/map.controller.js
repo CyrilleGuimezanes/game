@@ -1,8 +1,8 @@
 
-app.controller("MapController", ['$rootScope', '$scope', 'ModelManager', 'Zone', 'Move', 'Attack','MapManager', 'Construction', function($rootScope, $scope, ModelManager, Zone, Move,Attack,MapManager, Construction){
+app.controller("MapController", ['$rootScope', '$scope', '$interval', function($rootScope, $scope, $interval){
     $scope.selectedContruction = null;
-    $scope.rows = $rootScope.map;
-    $scope.pnjs = $rootScope.pnjs;
+    $scope.rows = window.map;
+    $scope.pnjs = window.pnjs;
 
     for (var row = 0; row < MAP_SIZE; row++){
       $scope.rows[row] = [];
@@ -13,78 +13,68 @@ app.controller("MapController", ['$rootScope', '$scope', 'ModelManager', 'Zone',
 
     for (var row = 0; row < MAP_SIZE; row++){
       for (var col = 0; col < MAP_SIZE; col++){
-        MapManager.registerTile("ground", row, col);
+        mapManager.registerTile(Ground, row, col);
       }
     }
 
-  MapManager.registerUnit("soldier", 5,1);
-      MapManager.registerUnit("soldier", 1,25);
-    MapManager.registerUnit("soldier", 15,1);
-    MapManager.registerUnit("soldier", 20,1);
-    MapManager.registerUnit("soldier", 25,1);
-    MapManager.registerUnit("soldier", 30,1);
-    MapManager.registerUnit("soldier", 35,1);
-    MapManager.registerUnit("soldier", 40,1);
-    MapManager.registerUnit("soldier", 45,1);
-    MapManager.registerUnit("soldier", 49,1);
+    mapManager.registerUnit(Soldier, 5,1);
+    mapManager.registerUnit(Soldier, 1,25);
+    mapManager.registerUnit(Soldier, 15,1);
+    mapManager.registerUnit(Soldier, 20,1);
+    mapManager.registerUnit(Soldier, 25,1);
+    mapManager.registerUnit(Soldier, 30,1);
+    mapManager.registerUnit(Soldier, 35,1);
+    mapManager.registerUnit(Soldier, 40,1);
+    mapManager.registerUnit(Soldier, 45,1);
+    mapManager.registerUnit(Soldier, 49,1);
 
-  MapManager.registerUnit("soldier", 5,49);
-    MapManager.registerUnit("soldier", 10,49);
-    MapManager.registerUnit("soldier", 15,49);
-    MapManager.registerUnit("soldier", 20,49);
-    MapManager.registerUnit("soldier", 25,49);
-    MapManager.registerUnit("soldier", 30,49);
-    MapManager.registerUnit("soldier", 35,49);
-    MapManager.registerUnit("soldier", 40,49);
-    MapManager.registerUnit("soldier", 45,49);
-    MapManager.registerUnit("soldier", 49,49);
+    mapManager.registerUnit(Soldier, 5,49);
+    mapManager.registerUnit(Soldier, 10,49);
+    mapManager.registerUnit(Soldier, 15,49);
+    mapManager.registerUnit(Soldier, 20,49);
+    mapManager.registerUnit(Soldier, 25,49);
+    mapManager.registerUnit(Soldier, 30,49);
+    mapManager.registerUnit(Soldier, 35,49);
+    mapManager.registerUnit(Soldier, 40,49);
+    mapManager.registerUnit(Soldier, 45,49);
+    mapManager.registerUnit(Soldier, 49,49);
 
-    MapManager.registerUnit("soldier", 49,5);
-    MapManager.registerUnit("soldier", 49,10);
-    MapManager.registerUnit("soldier", 49,15);
-    MapManager.registerUnit("soldier", 49,20);
-    MapManager.registerUnit("soldier", 49,25);
-    MapManager.registerUnit("soldier", 49,30);
-    MapManager.registerUnit("soldier", 49,35);
-    MapManager.registerUnit("soldier", 49,40);
-    MapManager.registerUnit("soldier", 49,45);
-    MapManager.registerUnit("soldier", 49,49);
+    mapManager.registerUnit(Soldier, 49,5);
+    mapManager.registerUnit(Soldier, 49,10);
+    mapManager.registerUnit(Soldier, 49,15);
+    mapManager.registerUnit(Soldier, 49,20);
+    mapManager.registerUnit(Soldier, 49,25);
+    mapManager.registerUnit(Soldier, 49,30);
+    mapManager.registerUnit(Soldier, 49,35);
+    mapManager.registerUnit(Soldier, 49,40);
+    mapManager.registerUnit(Soldier, 49,45);
+    mapManager.registerUnit(Soldier, 49,49);
 
-    MapManager.registerUnit("soldier", 1,5);
-    MapManager.registerUnit("soldier", 1,10);
-    MapManager.registerUnit("soldier", 1,15);
-    MapManager.registerUnit("soldier", 1,20);
-    MapManager.registerUnit("soldier", 1,25);
-    MapManager.registerUnit("soldier", 1,30);
-    MapManager.registerUnit("soldier", 1,35);
-    MapManager.registerUnit("soldier", 1,40);
-    MapManager.registerUnit("soldier", 1,45);
-    MapManager.registerUnit("soldier", 1,49);
-
-
-    MapManager.registerUnit("pecor", 23,23);
+    mapManager.registerUnit(Soldier, 1,5);
+    mapManager.registerUnit(Soldier, 1,10);
+    mapManager.registerUnit(Soldier, 1,15);
+    mapManager.registerUnit(Soldier, 1,20);
+    mapManager.registerUnit(Soldier, 1,25);
+    mapManager.registerUnit(Soldier, 1,30);
+    mapManager.registerUnit(Soldier, 1,35);
+    mapManager.registerUnit(Soldier, 1,40);
+    mapManager.registerUnit(Soldier, 1,45);
+    mapManager.registerUnit(Soldier, 1,49);
 
 
-    MapManager.registerTile("heart", 25,25);
-    MapManager.registerTile("small-wall", 24,24);
-    MapManager.registerTile("small-wall", 25,24);
-    MapManager.registerTile("small-wall", 26,24);
-    MapManager.registerTile("small-wall", 24,25);
-    MapManager.registerTile("small-wall", 26,25);
-    MapManager.registerTile("small-wall", 24,26);
-    MapManager.registerTile("small-wall", 25,26);
-    MapManager.registerTile("small-wall", 26,26);
+    mapManager.registerTile(Tower, 23,23);
 
 
+    mapManager.registerTile(Heart, 25,25);
+    mapManager.registerTile(SmallWall, 24,24);
+    mapManager.registerTile(SmallWall, 25,24);
+    mapManager.registerTile(SmallWall, 26,24);
+    mapManager.registerTile(SmallWall, 24,25);
+    mapManager.registerTile(SmallWall, 26,25);
+    mapManager.registerTile(SmallWall, 24,26);
+    mapManager.registerTile(SmallWall, 25,26);
+    mapManager.registerTile(SmallWall, 26,26);
 
-
-    var createLine = function(startX, startY, endX, endY, model){
-
-    }
-
-    var populateRows = function(){
-
-    }
 
     $scope.closePlaceMenu = function($event){
 
@@ -101,42 +91,42 @@ app.controller("MapController", ['$rootScope', '$scope', 'ModelManager', 'Zone',
     }
 
 
-    new Zone(10, 10, 20, "tree");
-    new Zone(35, 35, 40, "tree");
-    new Zone(10, 35, 60, "tree");
-    new Zone(35, 10, 80, "tree");
-    setTimeout(function(){
+    new Zone(10, 10, 20, Tree);
+    new Zone(35, 35, 40, Tree);
+    new Zone(10, 35, 60, Tree);
+    new Zone(35, 10, 80, Tree);
+
+    /********************************** boucle de jeu *****************************/
+    $interval(function(){
+      for (var i = 0; i < window.occupableItems.length; i++)
+        if(window.occupableItems[i] && window.occupableItems[i].getActivity() == null){
+          var activity = window.occupableItems[i].getActivities();
+          window.occupableItems[i][activity]();
+        }
+    }, 100);
+
+    /********************************** END boucle de jeu *****************************/
+
+
+    /*setTimeout(function(){
       var doAttack = function(unit){
         //console.log(unit.id + " move to attack ");
-          new Attack(unit).then(function(params){
-            var target = params.target;
-            //console.log(params.unit.id + " move done, attack"+  +  target.id);
 
-            if(params.type == "done"){//la target à été détruite durant le mouvement
-              target.once("destroy", function(){
-              //console.log(params.unit.id + " destroyed " +  target.id);
-                MapManager.replaceTile(target, "ground");
-                doAttack(params.unit);//recursive attack!
-              });
-              (params.unit.attack).bind(params.unit)(target);
-            }
-            else{
-              doAttack(params.unit);
-            }
-          });
+
       }
       for (var i = 0; i < $scope.pnjs.length; i++){
           var unit = $scope.pnjs[i];
-          doAttack(unit);
+          if(unit.getType() == Soldier)
+            doAttack(unit);
       }
-    }, 0)
+    }, 0);*/
     $scope.do = function($event, item){
         $scope.closePlaceMenu();
 
         if ($scope.selectedContruction == null)//DEBUG
           $scope.selectedContruction = {
             type: "line",
-            selection: "small-wall"
+            selection: SmallWall
           };
 
 
