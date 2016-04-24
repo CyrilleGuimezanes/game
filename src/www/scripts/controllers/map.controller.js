@@ -17,8 +17,10 @@ app.controller("MapController", ['$rootScope', '$scope', '$interval', function($
       }
     }
 
-    mapManager.registerUnit(Soldier, 5,1);
-    mapManager.registerUnit(Soldier, 1,25);
+    mapManager.registerUnit(Soldier, 14,15);
+
+
+    mapManager.registerUnit(Soldier, 5,5);
     mapManager.registerUnit(Soldier, 15,1);
     mapManager.registerUnit(Soldier, 20,1);
     mapManager.registerUnit(Soldier, 25,1);
@@ -62,8 +64,9 @@ app.controller("MapController", ['$rootScope', '$scope', '$interval', function($
     mapManager.registerUnit(Soldier, 1,49);
 
 
-    mapManager.registerTile(Tower, 23,23);
-
+    mapManager.registerTile(Tower, 18,18);
+    mapManager.registerTile(Tower, 29,29);
+    mapManager.registerTile(Tower, 29,17);
 
     mapManager.registerTile(Heart, 25,25);
     mapManager.registerTile(SmallWall, 24,24);
@@ -103,7 +106,7 @@ app.controller("MapController", ['$rootScope', '$scope', '$interval', function($
           var activity = window.occupableItems[i].getActivities();
           window.occupableItems[i][activity]();
         }
-    }, 100);
+    }, 50);
 
     /********************************** END boucle de jeu *****************************/
 
@@ -133,10 +136,10 @@ app.controller("MapController", ['$rootScope', '$scope', '$interval', function($
         if(item.getType() == "ground" && $scope.selectedContruction != null){
 
           if($scope.selectedContruction.type == "block"){
-            new Construction(item, null, $scope.selectedContruction.selection);
+            new Building(item, null, $scope.selectedContruction.selection);
           }
           else if($scope.selectedContruction.type == "line" && $scope.selectedContruction.start){//
-            new Construction($scope.selectedContruction.start, item, $scope.selectedContruction.selection);
+            new Building($scope.selectedContruction.start, item, $scope.selectedContruction.selection);
             $scope.selectedContruction = null;
           }
           else if($scope.selectedContruction.type == "line"){

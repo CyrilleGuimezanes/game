@@ -2,7 +2,16 @@
 var isDebug = false;
 var map = [];
 var pnjs = [];
+var projectiles = [];
 var occupableItems = [];
+
+var gold = 0;
+var wood = 0;
+var stone = 0;
+
+var apply = function(){
+  angular.element(document.getElementById('ctrl')).scope().$apply();
+}
 /**
  * @ngdoc overview
  * @name ltfmkApp
@@ -56,6 +65,7 @@ var app = angular
 .run(['$rootScope','fmk', function($rootScope, fmk){
   $rootScope.map = window.map;
   $rootScope.pnjs = window.pnjs;
+  $rootScope.projectiles = window.projectiles;
   window.mapManager = new MapManager();
 }])
 ;

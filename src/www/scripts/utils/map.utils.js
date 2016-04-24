@@ -26,8 +26,20 @@ MapManager.prototype.registerUnit = function(klass, x, y, params){
   if(item.getActivities().length)
     window.occupableItems.push(item);
 };
-MapManager.prototype.unregisterUnit = function(){
 
+MapManager.prototype.registerProjectile = function(klass, x, y, params){
+  var item = new klass(x, y, params);
+  window.projectiles.push(item);
+  item.on("hit", function(){
+    var i = window.projectiles.indexOf(item);
+    delete window.projectiles[i];
+  });
+  return item;
+}
+
+MapManager.prototype.unregisterUnit = function(item){
+  var i = window.pnjs.indexOf(item);
+  delete window.pnjs[i];
 },
 MapManager.prototype.unregisterTile = function(item){
   var type = item.getType();

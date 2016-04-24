@@ -1,17 +1,17 @@
 <div class="map-container">
   <div class="row" ng-repeat="row in rows">
-      <div id="place_{{::place.id}}" class="place {{::place.getClass()}}" ng-click="do($event, place)" style="font-size:9px" ng-repeat="place in row" >{{::place.id}}<br>{{place.life}}</div>
+      <div id="place_{{place.id}}" class="place {{place.getClass()}}" ng-click="do($event, place)" style="font-size:9px" ng-repeat="place in row  track by $index" >{{::place.id}}<br>{{place.life}}</div>
   </div>
 
 </div>
-<div class="pnj {{::pnj.getClass()}}"
-     id="unit_{{::pnj.id}}"
-     ng-repeat="pnj in pnjs"
+<div class="pnj {{pnj.getClass()}}"
+     id="unit_{{pnj.id}}"
+     ng-repeat="pnj in pnjs track by $index"
      ng-click="do($event, pnj)"
-     style="left: {{::pnj.getPosX()}}px; top: {{::pnj.getPosY()}}px; font-size:9px"><br>{{::pnj.life}}</div>
+     style="left: {{::pnj.getPosX()}}px; top: {{::pnj.getPosY()}}px; font-size:9px"><br>{{pnj.life}}</div>
 <div
   class="projectile {{::projectile.getClass()}}"
-  id="projectile_{{::projectile.id}}"
-  ng-repeat="projectile in projectiles"
+  id="projectile_{{projectile.id}}"
+  ng-repeat="projectile in projectiles track by $index"
   style="left: {{::projectile.getPosX()}}px; top: {{::projectile.getPosY()}}px;"
 />

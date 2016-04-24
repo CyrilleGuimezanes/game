@@ -68,6 +68,10 @@
 }
 .projectile{
   position: absolute;
-  width: 16px;
-  height: 16px;
+  width: 38px;
+  height: 38px;
+}
+.arrow{
+  background: #333;
+  background: url("../images/arrow.png");
 }

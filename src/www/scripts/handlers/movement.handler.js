@@ -1,4 +1,4 @@
-var Movement = function(unit){
+var Movement = function(unit, targets){
   this.move = null;
 
   var strategies = {
@@ -69,13 +69,13 @@ var Movement = function(unit){
   }
 
   this.findTarget = function(){
-    var targets = unit.getTargets();
+    var targets = targets || unit.getTargets();
     var closest = null;
     var candidates = {};
     for (var i = 0; i < targets.length; i++){
       candidates = angular.extend(candidates, mapManager._tiles[targets[i]]);
     }
-    try{
+    //try{
       bestTarget = findBestTarget(unit, candidates);
       var closestTile = findClosestWalkableTile(bestTarget);//TODO handle unit range
       if(closestTile){
@@ -87,10 +87,11 @@ var Movement = function(unit){
       }
       if(!target)
         throw "No target found";
-    }
-    catch(e){
-      return null;
-    }
+  //  }
+    //catch(e){
+      //console.error(e);
+      //return null;
+    //}
 
 
   }
@@ -104,15 +105,14 @@ var Movement = function(unit){
       var idBlock = null;
       var idDestroy = null;
       //var idAttack = null;
-      var onEvent = function(){
+      var onEvent = function(isInterupted){
+        to.off("destroyed", idDestroy);
         unit.off("blocked", idBlock);
         //unit.off("attacked", idAttack);
-        unit.trigger("moveEnd", {type:"interupt", target:this.move.getTarget(), unit: unit });
-        to.off("destroyed", idDestroy);
+        unit.trigger("moveEnd", {type:isInterupted? "interupt": "done", target:this.move.getTarget(), unit: unit } );
 
         if(!this.move.isDone()){
           this.move.interupt();
-          defer.resolve({type:"interupt", target:this.move.getTarget(), unit: unit } );
         }
 
       }.bind(this);
@@ -126,9 +126,9 @@ var Movement = function(unit){
         defer.resolve({type:"attacked", target:by, unit: unit } );
       });*/
 
-      this.move.start(function(){
-        unit.trigger("moveEnd", {type:"done", target:this.move.getTarget(), unit: unit } );
-        defer.resolve({type:"done", target:this.move.getTarget(), unit: unit } )
+      this.move.start(function(isInterupted){
+        onEvent(isInterupted);
+        defer.resolve({type:isInterupted? "interupt": "done", target:this.move.getTarget(), unit: unit } )
       }.bind(this));//target found! Move to
       return defer.promise;
     }

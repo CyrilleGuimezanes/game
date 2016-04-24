@@ -6,8 +6,10 @@ var Zone = function(x, y, size, model){
     var remainingSize = size - 1;
     var turn = 10;
 
-    if (remainingSize > 0 && window.map[y][x].getType() == "ground")
-      mapManager.registerTile(model, x, y);
+    if (remainingSize > 0 && window.map[y][x].getType() == "ground"){
+      mapManager.replaceTile(window.map[y][x], model);
+    }
+
 
     var minX = x - 1;
     var minY = y - 1;
@@ -28,7 +30,7 @@ var Zone = function(x, y, size, model){
               break;
             if (Math.random() <= 0.4)//si on est en train de finir, on fait des bordure irrégulière pour ne pas avoir un carré tout le temps
               continue;
-            mapManager.registerTile(model, i, j);
+            mapManager.replaceTile(window.map[j][i], model);
             zone.push({x: i, y: j});
             remainingSize--;
 

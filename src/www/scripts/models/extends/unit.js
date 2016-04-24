@@ -15,7 +15,7 @@ Unit.prototype.getWalkableTiles = function(){
 };
 
 Unit.prototype.getSpeed = function(){
-  return 1;
+  return this.speed;
 };
 
 
@@ -32,4 +32,7 @@ Unit.prototype.setY = function(y){
   this.y = y;
   $("#unit_"+this.id).css("top", this.getPosY()+ "px");
   return this;
+};
+Unit.prototype.getFamily = function(){
+  return "unit";
 };

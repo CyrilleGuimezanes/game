@@ -7,17 +7,13 @@ var Tower = function(x, y){
   this.attackSpeed = 1000;
   this.life = 300;
   this.force = 1;//nb de dommage par attaque
-
-  new DefendedZone(this);
+  this.projectile = Arrow;
+  this.class="tower"
 }
 
 Tower.prototype = Object.create(Tile.prototype);
 Tower.prototype.constructor = Tower;
 
-
-Tower.prototype.getClass = function(){
-  return "tower";
-};
 Tower.prototype.getType = function(){
   return types.TOWER;
 };
@@ -30,4 +26,8 @@ Tower.prototype.canAttack = function(tile){
 
 Tower.prototype.getActivities = function(){
   return ["guard"];
+};
+Tower.prototype.guard = function(){
+  new DefendedZone(this);
+  this.activity = "guard";
 };

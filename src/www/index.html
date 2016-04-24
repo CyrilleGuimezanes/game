@@ -9,7 +9,7 @@
       <link rel="stylesheet" href="styles/app.css" charset="utf-8">
     <!-- endbuild -->
   </head>
-  <body ng-controller="ltCtrl">
+  <body ng-controller="ltCtrl" id="ctrl">
     <div ui-view></div>
     <script src="cordova.js"></script>
 
@@ -71,21 +71,23 @@
     <script src="scripts/models/extends/projectile.js" charset="utf-8"></script>
     <script src="scripts/models/extends/tile.js" charset="utf-8"></script>
     <script src="scripts/models/extends/unit.js" charset="utf-8"></script>
+    <script src="scripts/models/arrow.js" charset="utf-8"></script>
     <script src="scripts/models/ground.js" charset="utf-8"></script>
     <script src="scripts/models/heart.js" charset="utf-8"></script>
     <script src="scripts/models/small-wall.js" charset="utf-8"></script>
     <script src="scripts/models/tree.js" charset="utf-8"></script>
     <script src="scripts/models/soldier.js" charset="utf-8"></script>
     <script src="scripts/models/tower.js" charset="utf-8"></script>
-    <script src="scripts/models/arrow.js" charset="utf-8"></script>
     <script src="scripts/utils/promise.js" charset="utf-8"></script>
     <script src="scripts/utils/path.utils.js" charset="utf-8"></script>
     <script src="scripts/utils/map.utils.js" charset="utf-8"></script>
+    <script src="scripts/generators/css.generator.js" charset="utf-8"></script>
     <script src="scripts/generators/zone.generator.js" charset="utf-8"></script>
+    <script src="scripts/generators/fly.generator.js" charset="utf-8"></script>
     <script src="scripts/generators/move.generator.js" charset="utf-8"></script>
     <script src="scripts/handlers/target.handler.js" charset="utf-8"></script>
     <script src="scripts/handlers/movement.handler.js" charset="utf-8"></script>
-    <script src="scripts/handlers/construction.handler.js" charset="utf-8"></script>
+    <script src="scripts/handlers/building.handler.js" charset="utf-8"></script>
     <script src="scripts/handlers/defended.zone.handler.js" charset="utf-8"></script>
     <script src="scripts/controllers/map.controller.js" charset="utf-8"></script>
 

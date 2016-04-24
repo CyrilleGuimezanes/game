@@ -4,15 +4,12 @@ var SmallWall = function(x, y){
   this.x = x;
   this.y = y;
   this.life = 11;
+  this.class ="small-wall";
 }
 
 SmallWall.prototype = Object.create(Tile.prototype);
 SmallWall.prototype.constructor = SmallWall;
 
-
-SmallWall.prototype.getClass = function(){
-  return this.params;
-};
 SmallWall.prototype.getType = function(){
   return types.SMALL_WALL;
 };

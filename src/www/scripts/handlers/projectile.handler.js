@@ -1,3 +1,3 @@
-var Projectile = function(){
-  
+var ProjectileHandler = function(type, start, end, speed){
+
 }

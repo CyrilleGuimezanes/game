@@ -9,7 +9,6 @@ var Tree = function(x, y){
     top: false,
     bottom: false,
   };
-
 }
 
 Tree.prototype = Object.create(Tile.prototype);

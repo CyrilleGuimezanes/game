@@ -6,26 +6,21 @@ var Soldier = function(x, y){
   this.x = x;
   this.y = y;
   this.range = 1;
-  this.speed = 3; //en tile/s
+  this.speed = 1; //en tile/s
   this.attackSpeed = 100;
   this.force = 1;
   this.life = 100;
+  this.class="soldier"
 }
 
 Soldier.prototype = Object.create(Unit.prototype);
 Soldier.prototype.constructor = Soldier;
 
-Soldier.prototype.getSpeed = function(){
-  return this.speed;
-};
-Soldier.prototype.getClass = function(){
-  return "soldier";
-};
 Soldier.prototype.getType = function(){
   return types.SOLDIER;
 };
 Soldier.prototype.getTargets = function(){
-  return ["tree","heart", "small-wall", "cytizen"];
+  return ["heart", "small-wall", "cytizen"];
 };
 Soldier.prototype.getWalkableTiles = function(tile){
     return ["ground"];
