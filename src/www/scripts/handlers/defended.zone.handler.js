@@ -8,8 +8,8 @@ var DefendedZone = function(unit){
 
 }
 DefendedZone.prototype.off = function(){
-  for (var i = 0; i < this.enemies.length; i++){
-    var data = this.enemies[i];
+  for (var id in this.enemies){
+    var data = this.enemies[id];
     data.unit.off("destroyed", data.unitDestroy);
   }
 
@@ -17,49 +17,42 @@ DefendedZone.prototype.off = function(){
     var data = this.zone[i];
     window.map[data.y][data.x].off("unitEnter", data.unitEnter);
     window.map[data.y][data.x].off("unitLeave", data.unitLeave);
-    $("#place_"+data.target.id).css("border", "1px solid black");
+  //  $("#place_"+data.target.id).css("border", "1px solid black");
   }
 
+}
+DefendedZone.prototype.selectTarget = function(){
+  var ids = Object.keys(this.enemies);
+  if (ids.length){
+    this.unit.attack(this.enemies[ids[0]].unit);
+  }
 }
 DefendedZone.prototype.set = function(){
   var _this = this;
   var checkActions = function(enemy){
-
-    //si l'enmie attaqué est ceului concerné, on arrete l'attaque
-    if (_this.unit.currentTarget && enemy.id == _this.unit.currentTarget.id){
-      _this.unit.stop();
-      _this.unit.activity = "guard";
-    }
-
-
     //Eventuellement, on enléve l'enemie de la liste d'enemie présents dans la zone
-    for (var i = 0; i < _this.enemies.length; i++)
-      if (_this.enemies[i].unit.id == enemy.id)
-        _this.enemies.splice(i, 1);
-
+    delete _this.enemies[enemy.id];
     //si on peut, on choisie une autre target
-    if (_this.unit.getActivity() == "guard" && _this.enemies.length){
-      _this.unit.attack(_this.enemies[0].unit);
-    }
+    _this.selectTarget();
   }
   for (var y = this.unit.getY() - this.unit.getRange(); y < this.unit.getY() + this.unit.getRange() + 1; y++){
     for (var x = this.unit.getX() - this.unit.getRange(); x < this.unit.getX() + this.unit.getRange() + 1; x++){
       //if(window.map[y][x].getType() == "ground"){
-        $("#place_"+window.map[y][x].id).css("border", "1px solid blue");
+        //$("#place_"+window.map[y][x].id).css("border", "1px solid blue");
         var unitEnter = window.map[y][x].on("unitEnter", function(e, enemy, from){
             if(_this.unit.getActivity() == "guard"){
-
               _this.unit.attack(enemy);
-
-              var unitDestroy = enemy.once("destroyed", function(e){
-                  checkActions(this);
+            }
+            if(!_this.enemies[enemy.id]){
+              var unitDestroy = enemy.once("destroyed", function(e, unit){
+                  checkActions(unit);
               });
-
-              _this.enemies.push({
+              _this.enemies[enemy.id] = {
                 unit: enemy,
                 unitDestroy: unitDestroy
-              })
+              };
             }
+
 
         });
 

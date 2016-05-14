@@ -51,7 +51,9 @@
 .small-wall-abr{
   background: #CCC;
 }
-
+.small-gate{
+  background: #AAA;
+}
 .tree{
   background: #235f31;
 }
@@ -59,7 +61,9 @@
 .tree-small{
   background: #48a75e;
 }
-
+.woodsman{
+  background: #DE22DE;
+}
 .soldier{
   background: url("../images/soldier.png");
 }

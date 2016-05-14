@@ -1,4 +1,4 @@
-<div class="map-container">
+<div class="map-container" id="map">
   <div class="row" ng-repeat="row in rows">
       <div id="place_{{place.id}}" class="place {{place.getClass()}}" ng-click="do($event, place)" style="font-size:9px" ng-repeat="place in row  track by $index" >{{::place.id}}<br>{{place.life}}</div>
   </div>

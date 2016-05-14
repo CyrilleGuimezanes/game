@@ -2,12 +2,14 @@ var Attackable = function(){
   Common.call(this);
   this.life = 1;
   this.activity = null;
-  this.strategy = "closest"
+  this.force = 1;
+  this.strategy = "closest";
   this.currentTarget = null;
   this._action = null;
-  this.attackSpeed = 1000;
+  this.activitySpeed = 1000;
   this.bag = {};//object (ressource, weapon, shield ... ) by unit
   this.bagSize = 10;
+
   this.transform = {
     x: 0,
     y: 0,
@@ -21,6 +23,7 @@ Attackable.prototype.constructor = Attackable;
 Attackable.prototype.stop = function(){
   this.activity = null;
   this.currentTarget = null;
+  this.path = null;
   if(this._action){
     clearInterval(this._action);
   }
@@ -55,14 +58,17 @@ Attackable.prototype.attack = function(to){
     if(this.range > 1){//distance
       this.currentTarget = to;
       var _attack = function(){
-        var item = mapManager.registerProjectile(_this.projectile, _this.getX(), _this.getY());
-        item.once("hit", function(e, projectile, target){
-          _dealDmg(target, projectile.force);
-        });
-        apply();
-        new Fly(_this, to, item).start();
+        if(to.life > 0){
+          var item = mapManager.registerProjectile(_this.projectile, _this.getX(), _this.getY());
+          item.once("hit", function(e, projectile, to){
+            _dealDmg(to, projectile.force);
+          });
+          apply();
+          new Fly(_this, to, item).start();
+        }
+
       }
-      _this._action = setInterval(_attack, _this.attackSpeed || 1000);
+      _this._action = setInterval(_attack, _this.activitySpeed || 1000);
       _attack();
 
     }
@@ -83,7 +89,7 @@ Attackable.prototype.attack = function(to){
 
         }
         if (params.type == "done"){
-          _this._action = setInterval(_attack, _this.attackSpeed || 1000);
+          _this._action = setInterval(_attack, _this.activitySpeed || 1000);
           _attack();
         }
         else{
@@ -98,10 +104,21 @@ Attackable.prototype.attack = function(to){
 };
 //get Ressource (tree, gold, water)
 Attackable.prototype.exploit = function(){
-  
+    var _this = this;
     var move = new Movement(this);
   move.start().then(function(params){
     var _exploit = function(){
+      var isFull = _this.addToBag(_this.getTargets[0], _this.force) == _this.bagSize;
+      if (isFull){
+        _this.stop();
+        _this.activity = "back-to-base";
+        new Movement(this, ["sawmill"]).start().then(function(datas){
+
+          //TODO donner les ressources au joueur, vider le sac & gérer destruction de l'arbre ou du bucheron
+          _this.removeFromBag();
+          _this.stop();
+        });
+      }
 
     }
     if (params.type == "done"){
@@ -118,36 +135,47 @@ Attackable.prototype.guard = function(){
   this.activity = "guard";
   return false;
 }
+
+
+
+
 Attackable.prototype.getStrategy = function(){
-  return this.strategy;
+  return this.strategy || "closest";
 }
 Attackable.prototype.getLife = function(){
   return this.life;
 };
 
+Attackable.prototype.getForce = function(){
+  return this.force || 0;
+};
 
 Attackable.prototype.getInterest= function(){
   return 0;
 };
 
 Attackable.prototype.getTargets = function(){
-  return [];//overriden in each unit
+  return this.targets || [];//overriden in each unit
 };
 
+
+Attackable.prototype.getWalkableTiles = function(){
+  return this.walkableTiles || ["ground"];//overriden in each unit
+};
 
 Attackable.prototype.canAttack = function(tile){
   return false;//overriden in each unit
 };
 Attackable.prototype.getRange = function(){
-  return this.range;
+  return this.range || 1;
 };
 
 Attackable.prototype.getActivity = function(){
-  return this.activity;
+  return this.activity || null;
 };
 
 Attackable.prototype.getActivities = function(){
-  return [];
+  return this.activities || [];
 };
 
 Attackable.prototype.addToBag = function(item, quantity){

@@ -10,8 +10,13 @@ var wood = 0;
 var stone = 0;
 
 var apply = function(){
-  angular.element(document.getElementById('ctrl')).scope().$apply();
+  var $scope = angular.element(document.getElementById('ctrl')).scope()
+  //if(!$scope.$$phase)
+    $scope.$apply();
 }
+
+
+
 /**
  * @ngdoc overview
  * @name ltfmkApp
@@ -63,9 +68,13 @@ var app = angular
         });
   }])
 .run(['$rootScope','fmk', function($rootScope, fmk){
-  $rootScope.map = window.map;
-  $rootScope.pnjs = window.pnjs;
-  $rootScope.projectiles = window.projectiles;
+  $rootScope.map = [];
+  $rootScope.pnjs = [];
+  $rootScope.projectiles = [];
+  $rootScope.occupableItems = [];
+  
+  window.$rootScope = $rootScope;
   window.mapManager = new MapManager();
+
 }])
 ;

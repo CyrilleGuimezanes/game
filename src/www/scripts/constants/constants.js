@@ -1,7 +1,6 @@
 var models = {};
 var MAP_SIZE = 50;
 var TILE_SIZE = 40;
-var MAX_CHECKED_PATH = 5;
 var types = {
     "UNKNOW": "unknow",
     "HEART": "heart",
@@ -16,4 +15,6 @@ var types = {
     "TREE": "tree",
     "SOLDIER": "soldier",
     "TOWER": "tower",
+    "WOODER": "woodsman",
+    "SMALL_GATE": "small-gate"
 }

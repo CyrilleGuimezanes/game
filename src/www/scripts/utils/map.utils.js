@@ -38,8 +38,13 @@ MapManager.prototype.registerProjectile = function(klass, x, y, params){
 }
 
 MapManager.prototype.unregisterUnit = function(item){
+  item.stop();
   var i = window.pnjs.indexOf(item);
   delete window.pnjs[i];
+  var y = window.occupableItems.indexOf(item);
+  delete window.occupableItems[y];
+
+  delete item;
 },
 MapManager.prototype.unregisterTile = function(item){
   var type = item.getType();

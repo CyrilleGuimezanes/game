@@ -14,7 +14,7 @@ var Move = function(unit, target, x, y){
   //done = done || angular.noop;
   var p = new Path({x: unit.getX(), y: unit.getY()}, {x: x, y:y}, unit.getWalkableTiles());
 
-  if(!p.get().length){
+  if(!p.get().length && unit.getActivity() == "attack"){
     var walkables = unit.getWalkableTiles().concat(unit.getTargets());
 
     p = new Path({x: unit.getX(), y: unit.getY()}, {x: x, y:y}, walkables);
@@ -43,8 +43,8 @@ var Move = function(unit, target, x, y){
       }
     }
   }
-  $("#place_"+window.map[unit.getY()][unit.getX()].id).css("border", "1px solid orange");
-  $("#place_"+window.map[y][x].id).css("border", "1px solid orange");
+  /*$("#place_"+window.map[unit.getY()][unit.getX()].id).css("border", "1px solid orange");
+  $("#place_"+window.map[y][x].id).css("border", "1px solid orange");*/
   this.css = new CSS(this.path, this.unit, this.target);
 }
 
@@ -53,17 +53,21 @@ var Move = function(unit, target, x, y){
 
 Move.prototype.onEnded = function(translation, rotation){
   var _unit = $("#unit_"+this.unit.id);
-  this.unit.setX(Math.round((this.unit.getPosX() + (translation? translation.x : 0)) / TILE_SIZE));
-  this.unit.setY(Math.round((this.unit.getPosY() + (translation? translation.y : 0)) / TILE_SIZE));
-  this.unit.path = null;
+
+  if (_unit.length){
+    this.unit.setX(Math.round((this.unit.getPosX() + (translation? translation.x : 0)) / TILE_SIZE));
+    this.unit.setY(Math.round((this.unit.getPosY() + (translation? translation.y : 0)) / TILE_SIZE));
+    this.unit.path = null;
+    _unit[0].style.webkitTransform = 'rotate(' + rotation + 'deg)';
+    _unit[0].style.MozTransform = 'rotate(' + rotation + 'deg)';
+    _unit[0].style.msTransform = 'rotate(' + rotation + 'deg)';
+    _unit[0].style.OTransform = 'rotate(' + rotation + 'deg)';
+    _unit[0].style.transform = 'rotate(' + rotation + 'deg)';
+  }
+
+
   _unit.removeClass(this.css.ident);
   $("#style-"+this.css.animationId).remove();
-
-  _unit[0].style.webkitTransform = 'rotate(' + rotation + 'deg)';
-  _unit[0].style.MozTransform = 'rotate(' + rotation + 'deg)';
-  _unit[0].style.msTransform = 'rotate(' + rotation + 'deg)';
-  _unit[0].style.OTransform = 'rotate(' + rotation + 'deg)';
-  _unit[0].style.transform = 'rotate(' + rotation + 'deg)';
 
 
   for (var i = 0; i < this.eventListen.length; i++){
@@ -103,27 +107,33 @@ Move.prototype.start = function(done){
         this._onMovementFinished(this.css.last);
       else if(_this.interupted){
         var elapsedTime = Date.now() - _this._startTime;
-        var currentStep = Math.round((elapsedTime * _this.css.animationsSteps.length)/ (_this.css.animationDuration * 1000));
-        currentStep = currentStep < 1? 1 : currentStep > _this.css.animationsSteps.length - 1? _this.css.animationsSteps.length - 1: currentStep;
-        window.map[_this._currentTile.y][_this._currentTile.x].trigger("unitLeave", this.unit, {x: x, y});
+        var currentStep = (Math.round((elapsedTime * _this.css.animationsSteps.length)/ (_this.css.animationDuration * 1000))) - 1;//-1 : base 0
+
+        currentStep = currentStep < 1? 0 : currentStep > _this.css.animationsSteps.length - 1? _this.css.animationsSteps.length - 1: currentStep;
+        //
         _this._onMovementFinished(this.css.animationsSteps[currentStep]);
       }
       else{
         var currentStep = this.css.animationsSteps[this.css.animationsSteps.length - _this._remaningIteration + 1];
         if(currentStep)
         {
-
-          var x = Math.round((this.unit.getPosX() + (currentStep.translation? currentStep.translation.x : 0)) / TILE_SIZE);
-          var y = Math.round((this.unit.getPosY() + (currentStep.translation? currentStep.translation.y : 0)) / TILE_SIZE);
+          var pos = /*this.unit.getCurrentPosition().translation ||*/ this.unit.getPos();
+          var x = Math.round((pos.x + (currentStep.translation? currentStep.translation.x : 0)) / TILE_SIZE);
+          var y = Math.round((pos.y + (currentStep.translation? currentStep.translation.y : 0)) / TILE_SIZE);
           if (x != _this._currentTile.x || y != _this._currentTile.y){
             //do something;
 
-            window.map[_this._currentTile.y][_this._currentTile.x].trigger("unitLeave", this.unit, {x: x, y});
-            window.map[y][x].trigger("unitEnter", this.unit, window.map[_this._currentTile.y][_this._currentTile.x]);
-            //$("#place_"+window.map[_this._currentTile.y][_this._currentTile.x].id).css("border", "1px solid white");
+            window.map[_this._currentTile.y][_this._currentTile.x].trigger("unitLeave", this.unit, window.map[_this._currentTile.y][_this._currentTile.x]);
+            window.map[y][x].trigger("unitEnter", this.unit, {x: x, y: y});
+            /*$("#place_"+window.map[y][x].id).css("border", "1px solid #F00");
+            $("#place_"+window.map[_this._currentTile.y][_this._currentTile.x].id).css("background", "#CCC");*/
+            /*On créé des positions virtuels pour ne pas perturber le mouvement et pouvoir calculer les interseptions*/
+            this.unit.virtualPos.x = x;
+            this.unit.virtualPos.y = y;
+
+
             if(this.unit.path && this.unit.path.length)
               this.unit.path.shift();
-
 
             _this._currentTile.x = x;
             _this._currentTile.y = y;

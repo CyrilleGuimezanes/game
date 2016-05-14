@@ -4,8 +4,9 @@ var CSS = function(path, unit, target){
   this.cssClass = null;
   this.animationsSteps = [];
   this.target = target;
+  var currentTransform = unit.getCurrentPosition();
   this.current = {
-    rotation: 0,
+    rotation: currentTransform?currentTransform.rotation : 0,
     translation: {x: 0, y: 0}
   }
 
@@ -64,33 +65,33 @@ CSS.prototype.createRotation = function(p1, p2){
   var left = p1.x - p2.x > 0;
   var top = p1.y - p2.y > 0;
   var ret = 0;
-  //diagonale top left:
-  if (top && left)
-  ret = 315;
+
+
   //top
-  else if (top && !left && !right)
-  ret = 0;
+  if (top && !left && !right)
+    ret = 0;
   //diagonale top right
   else if (top && right)
-  ret = 45;
+    ret = 45;
   //right
   else if (right && !top && !bottom)
-  ret =  90;
+    ret =  90;
   //diagonale bottom right
   else if (right && bottom)
-  ret =  135;
+    ret =  135;
   //bottom
   else if (bottom && !left && !right)
-  ret =  180;
+    ret =  180;
   //diagonale bottom left
   else if (bottom && left)
-  ret =  225;
+    ret =  225;
   //left
   else if (left && !top && !bottom)
-  ret =  270;
+    ret =  270;
+  //diagonale top left:
+  else if (top && left)
+    ret = 315;
 
-
-  //var ret = Math.atan2(p2.x - p1.x, p2.y - p1.y) * 180 / Math.PI  + 90;
   return {
     "rotation": ret
   }

@@ -3,7 +3,7 @@ var Arrow = function(x, y){
   Projectile.call(this);
   this.x = x;
   this.y = y;
-  this.speed = 5;
+  this.speed = 7;
   this.force = 30;
   this.class = "arrow";
 }

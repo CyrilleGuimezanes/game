@@ -104,10 +104,12 @@ var Movement = function(unit, targets){
       var to = this.move.getTarget();
       var idBlock = null;
       var idDestroy = null;
+      var idDestroy2 = null;
       //var idAttack = null;
       var onEvent = function(isInterupted){
         to.off("destroyed", idDestroy);
         unit.off("blocked", idBlock);
+        unit.off("destroyed", idDestroy2);
         //unit.off("attacked", idAttack);
         unit.trigger("moveEnd", {type:isInterupted? "interupt": "done", target:this.move.getTarget(), unit: unit } );
 
@@ -116,8 +118,9 @@ var Movement = function(unit, targets){
         }
 
       }.bind(this);
-      idDestroy = to.once("destroyed", onEvent);
-      idBlock = unit.once("blocked", onEvent);
+      idDestroy = to.once("destroyed",  function(){onEvent(true)});
+      idBlock = unit.once("blocked",  function(){onEvent(true)});
+      idDestroy2 = unit.once("destroyed", function(){onEvent(true)});
       /*idAttack = unit.once("attacked", function(e, by){//le soldat ce fait attacker durant son mouvement
         unit.trigger("moveEnd", {type:"attacked", target:by, unit: unit });
         unit.off("blocked", idBlock);

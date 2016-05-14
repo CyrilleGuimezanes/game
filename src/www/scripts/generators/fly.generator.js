@@ -71,14 +71,41 @@ var Fly = function(sender, target, projectile){
       return sol;
     }
 
+    var isPointOnLine = function(linePointA,linePointB, point)
+    {
+       var a = (linePointB.y - linePointA.y) / (linePointB.x - linePointB.x);
+       var b = linePointA.y - a * linePointA.x;
+       return Math.abs(point.y - (a*point.x+b)) < 0.001;
+    }
 //Possibilité d'avoir des éléments trop haut pour être franchits? A voir
-    var currCoords = target.getCurrentPosition();
-    if(!currCoords)
+
+    var pos = null;
+    if(!target.path || target.path.length == 1){
+      pos = intercept({x:sender.getX(), y:sender.getY()}, {x:target.getVirtualX(), y:target.getVirtualY(), vx: 0, vy:0}, this.projectile.getSpeed());
+    }
+    else{
+        var p1 = {x: target.path[0][0], y: target.path[0][1]};
+        var p2 = {x: target.path[1][0], y: target.path[1][1]};
+
+        var diff = {x: p2.x - p1.x, y: p2.y - p1.y};
+        var velocity = {x: diff.x * target.getSpeed(), y: diff.y * target.getSpeed()};
+        pos = intercept({x:sender.getX(), y:sender.getY()}, {x:target.getVirtualX(), y:target.getVirtualY(), vx: velocity.x , vy: velocity.y}, this.projectile.getSpeed());
+
+    }
+
+
+
+    if(!pos || Math.abs(pos.x - this.sender.getX()) > this.sender.getRange() || Math.abs(pos.y - this.sender.getY()) > this.sender.getRange())
       return null;
-    var pos = intercept({x:sender.getX(), y:sender.getY()}, {x:currCoords.translate.x, y:currCoords.translate.y, vx: target.getSpeed(), vy:target.getSpeed()}, projectile.getSpeed());
-    if(!pos)
+    if (pos.x < MAP_SIZE && pos.y < MAP_SIZE){
+      //$("#place_"+window.map[Math.round(target.getVirtualY())][Math.round(target.getVirtualX())].id).css("border", "1px solid #0F0");
+      //$("#place_"+window.map[Math.round(pos.y)][Math.round(pos.x)].id).css("border", "1px solid #F00");
+      this.path = [[sender.getX(), sender.getY()],[Math.round(pos.x), Math.round(pos.y)]];
+    }
+    else {
       return null;
-    this.path = [[sender.getX(), sender.getY()],[Math.round(pos.x), Math.round(pos.y)]];
+    }
+
 
 }
 

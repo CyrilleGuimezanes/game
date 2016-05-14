@@ -54,7 +54,7 @@ Common.prototype.getClass = function(){
   return this.class;
 };
 Common.prototype.getType = function(){
-  return types.UNKNOW;
+  return this.type;
 };
 
 Common.prototype.getPosX = function(){
@@ -62,6 +62,9 @@ Common.prototype.getPosX = function(){
 };
 Common.prototype.getPosY = function(){
   return this.y * TILE_SIZE + 1;//+1 for borders
+};
+Common.prototype.getPos = function(){
+  return {x: this.x * TILE_SIZE + 1, y: this.y * TILE_SIZE + 1};//+1 for borders
 };
 //get physical unit position
 Common.prototype.getCurrentPosition = function(){
@@ -117,8 +120,13 @@ Common.prototype.getCurrentPosition = function(){
     var matrix = cssToMatrix("unit_"+this.id);
     if (matrix)
       var transform = matrixToTransformObj(matrix);
+
+
+
+
     if(!transform)
       return null;
+
     else if(transform.translate.x == 0 && transform.translate.y == 0)
       return {translate: {x: this.getX(), y: this.getY()}, rotation: transform.rotation};
     return transform;

@@ -1,8 +1,7 @@
 
 app.controller("MapController", ['$rootScope', '$scope', '$interval', function($rootScope, $scope, $interval){
     $scope.selectedContruction = null;
-    $scope.rows = window.map;
-    $scope.pnjs = window.pnjs;
+  
 
     for (var row = 0; row < MAP_SIZE; row++){
       $scope.rows[row] = [];
@@ -64,15 +63,15 @@ app.controller("MapController", ['$rootScope', '$scope', '$interval', function($
     mapManager.registerUnit(Soldier, 1,49);
 
 
-    mapManager.registerTile(Tower, 18,18);
+    mapManager.registerTile(Tower, 22,22);
     mapManager.registerTile(Tower, 29,29);
-    mapManager.registerTile(Tower, 29,17);
+    mapManager.registerTile(Tower, 29,22);
 
     mapManager.registerTile(Heart, 25,25);
     mapManager.registerTile(SmallWall, 24,24);
     mapManager.registerTile(SmallWall, 25,24);
     mapManager.registerTile(SmallWall, 26,24);
-    mapManager.registerTile(SmallWall, 24,25);
+    mapManager.registerTile(SmallGate, 24,25);
     mapManager.registerTile(SmallWall, 26,25);
     mapManager.registerTile(SmallWall, 24,26);
     mapManager.registerTile(SmallWall, 25,26);
@@ -101,12 +100,15 @@ app.controller("MapController", ['$rootScope', '$scope', '$interval', function($
 
     /********************************** boucle de jeu *****************************/
     $interval(function(){
-      for (var i = 0; i < window.occupableItems.length; i++)
+      for (var i = 0; i < window.occupableItems.length; i++){
         if(window.occupableItems[i] && window.occupableItems[i].getActivity() == null){
           var activity = window.occupableItems[i].getActivities();
           window.occupableItems[i][activity]();
+
         }
-    }, 50);
+      }
+
+    }, 25);
 
     /********************************** END boucle de jeu *****************************/
 

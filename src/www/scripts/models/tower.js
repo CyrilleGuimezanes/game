@@ -3,8 +3,8 @@ var Tower = function(x, y){
   Tile.call(this);
   this.x = x;
   this.y = y;
-  this.range = 3; //en tile => zone de surveillance de 3 tiles
-  this.attackSpeed = 1000;
+  this.range = 4; //en tile => zone de surveillance en tiles
+  this.activitySpeed = 200;
   this.life = 300;
   this.force = 1;//nb de dommage par attaque
   this.projectile = Arrow;
@@ -21,13 +21,17 @@ Tower.prototype.getTargets = function(){
   return [];
 };
 Tower.prototype.canAttack = function(tile){
-  return Math.abs(tile.getX() - this.x) <= this.range || Math.abs(tile.getY() - this.y) <= this.range;
+  return Math.abs(tile.getX() - this.x) <= this.range && Math.abs(tile.getY() - this.y) <= this.range;
 };
 
 Tower.prototype.getActivities = function(){
   return ["guard"];
 };
 Tower.prototype.guard = function(){
-  new DefendedZone(this);
+  if(!this._hasZone){
+    this.defend = new DefendedZone(this);
+    this._hasZone = true;
+  }
   this.activity = "guard";
+  this.defend.selectTarget();
 };
